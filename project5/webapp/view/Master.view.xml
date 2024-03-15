@@ -1,0 +1,143 @@
+<mvc:View controllerName="ns.project5.controller.Master"
+          displayBlock="true"
+          xmlns:mvc="sap.ui.core.mvc" 
+          xmlns="sap.m"
+          xmlns:semantic="sap.f.semantic">
+          <semantic:SemanticPage
+          id="page"
+          headerPinnable="false"
+          toggleHeaderOnTitleClick="false"
+          showFooter="true">
+  
+          <semantic:titleHeading>
+              <Title id="_IDGenTitle1" text="{i18n>worklistTitle}"/>
+          </semantic:titleHeading>
+  
+          <semantic:headerContent>
+              <IconTabBar
+                  id="iconTabBar"
+                  select=".onQuickFilter"
+                  expandable="false">
+                  <items>
+                      <IconTabFilter id="_IDGenIconTabFilter1"
+                          key="all"
+                          showAll="true"
+                          count="{worklistView>/countAll}"
+                          text="{i18n>WorklistFilterProductsAll}"/>
+                      <IconTabSeparator id="_IDGenIconTabSeparator1"/>
+                      <IconTabFilter id="_IDGenIconTabFilter2"
+                          key="inStock"
+                          icon="sap-icon://message-success"
+                          iconColor="Positive"
+                          count="{worklistView>/inStock}"
+                          text="{i18n>WorklistFilterInStock}"/>
+                      <IconTabFilter id="_IDGenIconTabFilter3"
+                          key="shortage"
+                          icon="sap-icon://message-warning"
+                          iconColor="Critical"
+                          count="{worklistView>/shortage}"
+                          text="{i18n>WorklistFilterShortage}"/>
+                      <IconTabFilter id="_IDGenIconTabFilter4"
+                          key="outOfStock"
+                          icon="sap-icon://message-error"
+                          iconColor="Negative"
+                          count="{worklistView>/outOfStock}"
+                          text="{i18n>WorklistFilterOutOfStock}"/>
+                  </items>
+                  <content>
+                      <Table
+                          id="table"
+                          busyIndicatorDelay="{worklistView>/tableBusyDelay}"
+                          growing="true"
+                          growingScrollToLoad="true"
+                          noDataText="{worklistView>/tableNoDataText}"
+                          updateFinished=".onUpdateFinished"
+                          width="auto"
+                          mode="MultiSelect"
+                          items="{
+                              path: '/HeaderSet',
+                              sorter: {
+                                  path: 'Bukrs',
+                                  descending: false
+                              },
+                              parameters: {
+                                  'expand': 'Items'
+                              }
+                          }">
+                      <headerToolbar>
+                          <Toolbar id="_IDGenToolbar1">
+                              <Title
+                                  id="tableHeader"
+                                  text="{MasterView>/worklistTableTitle}"/>
+                              <ToolbarSpacer id="_IDGenToolbarSpacer1"/>
+                              <SearchField
+                                  id="searchField"
+                                  tooltip="{i18n>worklistSearchTooltip}"
+                                  search=".onSearch"
+                                  width="auto">
+                              </SearchField>
+                          </Toolbar>
+                      </headerToolbar>
+  
+                          <columns>
+                              <Column id="nameColumn">
+                                  <Text
+                                      id="nameColumnTitle"
+                                      text="{i18n>TableNameColumnTitle}"/>
+                              </Column>
+                              <Column
+                                  id="supplierNameColumn"
+                                  demandPopin="false"
+                                  minScreenWidth="Tablet">
+                                  <Text id="_IDGenText1" text="{i18n>TableSupplierColumnTitle}"/>
+                              </Column>
+                              <Column
+                                  id="unitPriceColumn"
+                                  hAlign="End"
+                                  demandPopin="true"
+                                  minScreenWidth="Tablet">
+                                  <Text id="_IDGenText2" text="{i18n>TablePriceColumnTitle}"/>
+                              </Column>
+                              <Column id="unitsOnOrderColumn"
+                                  demandPopin="true"
+                                  minScreenWidth="Tablet"
+                                  hAlign="End">
+                                  <Text id="_IDGenText3" text="{i18n>TableUnitsOrderedColumnTitle}"/>
+                              </Column>
+                              <Column
+                                  id="unitsInStockColumn"
+                                  hAlign="End">
+                                  <Text id="_IDGenText4" text="{i18n>TableUnitsInStockColumnTitle}"/>
+                              </Column>
+                          </columns>
+                      <items>
+                          <ColumnListItem id="_IDGenColumnListItem1"
+                              type="Navigation"
+                              press=".onPress">
+                              <cells>
+                                  <ObjectIdentifier id="_IDGenObjectIdentifier1"
+                                      title="{Bukrs}"/>
+                                      <ObjectIdentifier id="_IDGenObjectIdentifier12"
+                                      title="{Gjahr}"/>
+                                      <ObjectIdentifier id="_IDGenObjectIdentifier13"
+                                      title="{DocumentNumber}"/>
+                                      <ObjectIdentifier id="_IDGenObjectIdentifier14"
+                                      title="{Bukrs}"/>
+                                  </cells>
+                              </ColumnListItem>
+                          </items>
+                      </Table>
+                  </content>
+              </IconTabBar>
+          </semantic:headerContent>
+          <semantic:sendEmailAction>
+              <semantic:SendEmailAction id="shareEmail" press=".onShareEmailPress"/>
+          </semantic:sendEmailAction>
+          <semantic:positiveAction>
+              <semantic:PositiveAction id="_IDGenPositiveAction1" text="{i18n>TableProductsReorder}" press=".onUpdateStockObjects"/>
+          </semantic:positiveAction>
+          <semantic:negativeAction>
+              <semantic:NegativeAction id="_IDGenNegativeAction1" text="{i18n>TablePorductsUnlist}" press=".onUnlistObjects"/>
+          </semantic:negativeAction>
+      </semantic:SemanticPage>
+</mvc:View>
